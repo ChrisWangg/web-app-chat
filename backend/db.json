@@ -1,0 +1,56 @@
+{
+  "users": [
+    {
+      "email": "blah@gmial.com",
+      "password": "asdsadasd"
+    },
+    {
+      "email": "you@example.com",
+      "password": "asd"
+    },
+    {
+      "email": "blasd",
+      "password": "asdasd"
+    },
+    {
+      "email": "nklndczxc",
+      "password": "akslca"
+    },
+    {
+      "email": "testing123",
+      "password": "applebees"
+    },
+    {
+      "email": "chris",
+      "password": "123"
+    },
+    {
+      "email": "chris1",
+      "password": "1234"
+    },
+    {
+      "email": "sapphire",
+      "password": "wildie"
+    },
+    {
+      "email": "chris2",
+      "password": "12345"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "from": "blah@gmial.com",
+      "to": "you@example.com",
+      "content": "Hey, are you around?",
+      "timestamp": "2025-07-11T09:00:00Z"
+    },
+    {
+      "id": 2,
+      "from": "you@example.com",
+      "to": "blah@gmial.com",
+      "content": "Yep\u2014in a sec!",
+      "timestamp": "2025-07-11T09:01:30Z"
+    }
+  ]
+}
