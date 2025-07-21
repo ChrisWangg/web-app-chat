@@ -1,56 +1,47 @@
 {
   "users": [
     {
-      "email": "blah@gmial.com",
-      "password": "asdsadasd"
-    },
-    {
-      "email": "you@example.com",
-      "password": "asd"
-    },
-    {
-      "email": "blasd",
-      "password": "asdasd"
-    },
-    {
-      "email": "nklndczxc",
-      "password": "akslca"
-    },
-    {
-      "email": "testing123",
-      "password": "applebees"
-    },
-    {
       "email": "chris",
-      "password": "123"
-    },
-    {
-      "email": "chris1",
-      "password": "1234"
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$h2RCTPo9JQ95j4UzsTCmVA$BiPUceGMm9NWQEcMQrId3KXNonIDDe+4XNlun6wjNu4"
     },
     {
       "email": "sapphire",
-      "password": "wildie"
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$UEAZfo9e0+WuMoJmH0RjiA$KsJVNzARehA51NC2D1HJwDiyPcuSOIOAGLwSLPfFqlE"
     },
     {
-      "email": "chris2",
-      "password": "12345"
+      "email": "admin",
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$c4oLh9KkSCyZJY4p1zpPQg$2hkGW2Uf45bKu4lvu/30++cskNB9hXi//mRYnt7YHBU"
+    },
+    {
+      "email": "samin",
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$4aPwoOb88rPQMEIbeeCYHA$MULZr2/vZqid02LpYbULTwpNyR24qe9JK/8YtXD0T4k"
     }
   ],
   "messages": [
     {
       "id": 1,
-      "from": "blah@gmial.com",
-      "to": "you@example.com",
-      "content": "Hey, are you around?",
-      "timestamp": "2025-07-11T09:00:00Z"
-    },
-    {
-      "id": 2,
-      "from": "you@example.com",
-      "to": "blah@gmial.com",
-      "content": "Yep\u2014in a sec!",
-      "timestamp": "2025-07-11T09:01:30Z"
+      "from_email": "samin",
+      "to_email": "chris",
+      "content": "hi",
+      "timestamp": 1753076759.876051
     }
-  ]
+  ],
+  "friend_list": {
+    "sapphire": [
+      "chris",
+      "admin"
+    ],
+    "chris": [
+      "samin",
+      "sapphire",
+      "admin"
+    ],
+    "admin": [
+      "chris",
+      "sapphire"
+    ],
+    "samin": [
+      "chris"
+    ]
+  }
 }

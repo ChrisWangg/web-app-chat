@@ -1,7 +1,16 @@
 "use client"
 
 import * as React from "react"
-import { ArchiveX, Command, File, Inbox, Send, Trash2 } from "lucide-react"
+import {
+  AlertCircleIcon,
+  ArchiveX,
+  Command,
+  File,
+  Inbox,
+  Send,
+  Trash2,
+} from "lucide-react"
+import { cn } from "@/lib/utils"
 
 import { NavUser } from "@/components/nav-user"
 import { Label } from "@/components/ui/label"
@@ -19,136 +28,121 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { Switch } from "@/components/ui/switch"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog"
+import { Button } from "./ui/button"
+import { Alert, AlertTitle } from "./ui/alert"
 
-// This is sample data
-const data = {
+// ── Type Definitions ─────────────────────────────────────────────────────────
+interface Mail {
+  name: string
+  email: string
+  subject: string
+  date: string
+  teaser: string
+}
+
+interface NavItem {
+  title: string
+  url: string
+  icon: React.ComponentType<any>
+  isActive: boolean
+}
+
+interface SidebarData {
+  user: { name: string; email: string; avatar: string }
+  navMain: NavItem[]
+  mails: Mail[]
+}
+
+// ── Sample Data (trimmed for brevity) ────────────────────────────────────────
+const data: SidebarData = {
   user: {
     name: "shadcn",
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
-    {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
-      isActive: true,
-    },
-    {
-      title: "Drafts",
-      url: "#",
-      icon: File,
-      isActive: false,
-    },
-    {
-      title: "Sent",
-      url: "#",
-      icon: Send,
-      isActive: false,
-    },
-    {
-      title: "Junk",
-      url: "#",
-      icon: ArchiveX,
-      isActive: false,
-    },
-    {
-      title: "Trash",
-      url: "#",
-      icon: Trash2,
-      isActive: false,
-    },
+    { title: "Inbox", url: "#", icon: Inbox, isActive: true },
+    { title: "Drafts", url: "#", icon: File, isActive: false },
+    { title: "Sent", url: "#", icon: Send, isActive: false },
+    { title: "Junk", url: "#", icon: ArchiveX, isActive: false },
+    { title: "Trash", url: "#", icon: Trash2, isActive: false },
   ],
-  mails: [
-    {
-      name: "William Smith",
-      email: "williamsmith@example.com",
-      subject: "Meeting Tomorrow",
-      date: "09:34 AM",
-      teaser:
-        "Hi team, just a reminder about our meeting tomorrow at 10 AM.\nPlease come prepared with your project updates.",
-    },
-    {
-      name: "Alice Smith",
-      email: "alicesmith@example.com",
-      subject: "Re: Project Update",
-      date: "Yesterday",
-      teaser:
-        "Thanks for the update. The progress looks great so far.\nLet's schedule a call to discuss the next steps.",
-    },
-    {
-      name: "Bob Johnson",
-      email: "bobjohnson@example.com",
-      subject: "Weekend Plans",
-      date: "2 days ago",
-      teaser:
-        "Hey everyone! I'm thinking of organizing a team outing this weekend.\nWould you be interested in a hiking trip or a beach day?",
-    },
-    {
-      name: "Emily Davis",
-      email: "emilydavis@example.com",
-      subject: "Re: Question about Budget",
-      date: "2 days ago",
-      teaser:
-        "I've reviewed the budget numbers you sent over.\nCan we set up a quick call to discuss some potential adjustments?",
-    },
-    {
-      name: "Michael Wilson",
-      email: "michaelwilson@example.com",
-      subject: "Important Announcement",
-      date: "1 week ago",
-      teaser:
-        "Please join us for an all-hands meeting this Friday at 3 PM.\nWe have some exciting news to share about the company's future.",
-    },
-    {
-      name: "Sarah Brown",
-      email: "sarahbrown@example.com",
-      subject: "Re: Feedback on Proposal",
-      date: "1 week ago",
-      teaser:
-        "Thank you for sending over the proposal. I've reviewed it and have some thoughts.\nCould we schedule a meeting to discuss my feedback in detail?",
-    },
-    {
-      name: "David Lee",
-      email: "davidlee@example.com",
-      subject: "New Project Idea",
-      date: "1 week ago",
-      teaser:
-        "I've been brainstorming and came up with an interesting project concept.\nDo you have time this week to discuss its potential impact and feasibility?",
-    },
-    {
-      name: "Olivia Wilson",
-      email: "oliviawilson@example.com",
-      subject: "Vacation Plans",
-      date: "1 week ago",
-      teaser:
-        "Just a heads up that I'll be taking a two-week vacation next month.\nI'll make sure all my projects are up to date before I leave.",
-    },
-    {
-      name: "James Martin",
-      email: "jamesmartin@example.com",
-      subject: "Re: Conference Registration",
-      date: "1 week ago",
-      teaser:
-        "I've completed the registration for the upcoming tech conference.\nLet me know if you need any additional information from my end.",
-    },
-    {
-      name: "Sophia White",
-      email: "sophiawhite@example.com",
-      subject: "Team Dinner",
-      date: "1 week ago",
-      teaser:
-        "To celebrate our recent project success, I'd like to organize a team dinner.\nAre you available next Friday evening? Please let me know your preferences.",
-    },
-  ],
+  mails: [],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  // Note: I'm using state to show active item.
-  // IRL you should use the url/router.
-  const [activeItem, setActiveItem] = React.useState(data.navMain[0])
-  const [mails, setMails] = React.useState(data.mails)
+// ── Component ────────────────────────────────────────────────────────────────
+export function AppSidebar(
+  {
+    onSelectFriend,
+    selectedFriend,
+    ...props
+  }: React.ComponentProps<typeof Sidebar> & {
+    onSelectFriend?: (email: string) => void
+    selectedFriend?: string | null
+  }
+) {
+  const [activeItem, setActiveItem] = React.useState<NavItem>(data.navMain[0])
+  const [mails, setMails] = React.useState<Mail[]>(data.mails)
   const { setOpen } = useSidebar()
+
+  // Pull out the friend‐loading logic
+  const fetchFriends = async () => {
+    try {
+      const res = await fetch("http://localhost:8000/api/friends", {
+        credentials: "include",
+      })
+      if (!res.ok) throw new Error("Failed to load friends")
+      const friends: string[] = await res.json()
+      setMails(
+        friends.map((e) => ({
+          name: e.split("@")[0],
+          email: e,
+          subject: "",
+          date: "",
+          teaser: "",
+        }))
+      )
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  React.useEffect(() => {
+    fetchFriends()
+  }, [])
+
+  const [friendUsername, setFriendUsername] = React.useState("")
+  const [friendError, setFriendError] = React.useState<string | null>(null)
+
+  const handleAddFriend = async () => {
+    setFriendError(null)
+    try {
+      const res = await fetch("http://localhost:8000/api/add-friend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          username: friendUsername,
+        }),
+      })
+      if (!res.ok) {
+        const body = await res.json()
+        throw new Error(body.detail || "Add friend failed")
+      }
+      setFriendUsername("")
+      await fetchFriends()
+    } catch (err: any) {
+      setFriendError(err.message)
+    }
+  }
 
   return (
     <Sidebar
@@ -156,13 +150,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       className="overflow-hidden *:data-[sidebar=sidebar]:flex-row"
       {...props}
     >
-      {/* This is the first sidebar */}
-      {/* We disable collapsible and adjust width to icon. */}
-      {/* This will make the sidebar appear as icons. */}
-      <Sidebar
-        collapsible="none"
-        className="w-[calc(var(--sidebar-width-icon)+1px)]! border-r"
-      >
+      {/* ── Left icon‑only bar ───────────────────────────────────────────── */}
+      <Sidebar collapsible="none" className="w-[calc(var(--sidebar-width-icon)+1px)]! border-r">
         <SidebarHeader>
           <SidebarMenu>
             <SidebarMenuItem>
@@ -172,7 +161,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <Command className="size-4" />
                   </div>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">Acme Inc</span>
+                    <span className="truncate font-medium">Acme Inc</span>
                     <span className="truncate text-xs">Enterprise</span>
                   </div>
                 </a>
@@ -180,6 +169,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarHeader>
+
         <SidebarContent>
           <SidebarGroup>
             <SidebarGroupContent className="px-1.5 md:px-0">
@@ -187,25 +177,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 {data.navMain.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
-                      tooltip={{
-                        children: item.title,
-                        hidden: false,
-                      }}
+                      tooltip={{ children: item.title, hidden: false }}
                       onClick={() => {
                         setActiveItem(item)
-                        const mail = data.mails.sort(() => Math.random() - 0.5)
-                        setMails(
-                          mail.slice(
-                            0,
-                            Math.max(5, Math.floor(Math.random() * 10) + 1)
-                          )
-                        )
                         setOpen(true)
                       }}
-                      isActive={activeItem?.title === item.title}
+                      isActive={activeItem.title === item.title}
                       className="px-2.5 md:px-2"
                     >
-                      <item.icon />
+                      <item.icon className="size-4" />
                       <span>{item.title}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
@@ -214,44 +194,91 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarGroupContent>
           </SidebarGroup>
         </SidebarContent>
+
         <SidebarFooter>
           <NavUser user={data.user} />
         </SidebarFooter>
       </Sidebar>
 
-      {/* This is the second sidebar */}
-      {/* We disable collapsible and let it fill remaining space */}
+      {/* ── Right sidebar with friend list ─────────────────────────────── */}
       <Sidebar collapsible="none" className="hidden flex-1 md:flex">
         <SidebarHeader className="gap-3.5 border-b p-4">
           <div className="flex w-full items-center justify-between">
             <div className="text-foreground text-base font-medium">
-              {activeItem?.title}
+              {activeItem.title}
             </div>
-            <Label className="flex items-center gap-2 text-sm">
-              <span>Unreads</span>
-              <Switch className="shadow-none" />
-            </Label>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm">
+                  Add Friend
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogTitle>Add Friend</DialogTitle>
+                <DialogDescription>
+                  Enter username (email) to add a new friend.
+                </DialogDescription>
+
+                {friendError && (
+                  <Alert variant="destructive" className="mt-4">
+                    <AlertCircleIcon />
+                    <AlertTitle>{friendError}</AlertTitle>
+                  </Alert>
+                )}
+
+                <div className="mt-4 space-y-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="friend-username">Username</Label>
+                    <input
+                      id="friend-username"
+                      className="block w-full rounded-md border p-2"
+                      value={friendUsername}
+                      onChange={(e) => setFriendUsername(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-6 flex justify-end space-x-2">
+                  <DialogClose asChild>
+                    <Button variant="outline" size="sm">
+                      Cancel
+                    </Button>
+                  </DialogClose>
+                  <DialogClose asChild>
+                    <Button
+                      size="sm"
+                      onClick={handleAddFriend}
+                    >
+                      Add
+                    </Button>
+                  </DialogClose>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
-          <SidebarInput placeholder="Type to search..." />
+          <SidebarInput placeholder="Type to search..." className="mt-3" />
         </SidebarHeader>
+
         <SidebarContent>
           <SidebarGroup className="px-0">
             <SidebarGroupContent>
               {mails.map((mail) => (
-                <a
-                  href="#"
+                <button
+                  type="button"
                   key={mail.email}
-                  className="hover:bg-sidebar-accent hover:text-sidebar-accent-foreground flex flex-col items-start gap-2 border-b p-4 text-sm leading-tight whitespace-nowrap last:border-b-0"
+                  onClick={() => onSelectFriend?.(mail.email)}
+                  className={cn(
+                    "flex w-full flex-col items-start gap-2 border-b p-4 text-left text-sm leading-tight last:border-b-0",
+                    mail.email === selectedFriend
+                      ? "bg-muted text-foreground font-semibold"
+                      : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  )}
                 >
                   <div className="flex w-full items-center gap-2">
-                    <span>{mail.name}</span>{" "}
-                    <span className="ml-auto text-xs">{mail.date}</span>
+                    <span>{mail.name}</span>
                   </div>
-                  <span className="font-medium">{mail.subject}</span>
-                  <span className="line-clamp-2 w-[260px] text-xs whitespace-break-spaces">
-                    {mail.teaser}
-                  </span>
-                </a>
+                </button>
               ))}
             </SidebarGroupContent>
           </SidebarGroup>
