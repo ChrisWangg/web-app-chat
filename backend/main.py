@@ -1,6 +1,9 @@
-# main.py
+# ────────────────────────────────────────────────────────────────────────────
+#  main.py – FastAPI backend with dual‑wrapped AES keys for E2EE chat
+# ────────────────────────────────────────────────────────────────────────────
 import os, json, time
-from typing import List
+from typing import List, Optional
+
 from fastapi import FastAPI, HTTPException, Depends, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
@@ -10,8 +13,7 @@ from argon2 import PasswordHasher, exceptions as argon2_exceptions
 app = FastAPI()
 ph = PasswordHasher()
 
-
-# ─── CORS ───────────────────────────────────────────────────────────────────────
+# ── CORS ─────────────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -20,21 +22,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ─── SESSION MIDDLEWARE ─────────────────────────────────────────────────────────
-#  
-# This signs & verifies an HttpOnly "session" cookie for you.
+# ── Secure session cookie ───────────────────────────────────────────────────
 app.add_middleware(SessionMiddleware, secret_key="COMP6841")
 
-# ─── Pydantic MODELS ─────────────────────────────────────────────────────────────
+# ── Pydantic models ─────────────────────────────────────────────────────────
 class UserCreate(BaseModel):
     email: str
     password: str
+    public_key: Optional[str] = None
 
-class MessageIn(BaseModel):
+class PublicKeyIn(BaseModel):
+    key: str
+
+class PublicKeyOut(PublicKeyIn):
+    email: str
+
+class MessageEncryptedIn(BaseModel):
     to_email: str
-    content: str
+    ciphertext: str
+    encrypted_key: str                      # wrapped for RECIPIENT
+    encrypted_key_self: Optional[str] = ""  # wrapped for SENDER
+    iv: str
+    tag: str
 
-class Message(MessageIn):
+class MessageEncrypted(MessageEncryptedIn):
     id: int
     from_email: str
     timestamp: float
@@ -42,7 +53,7 @@ class Message(MessageIn):
 class FriendRequest(BaseModel):
     username: str
 
-# ─── SIMPLE FILE “DB” HELPERS ────────────────────────────────────────────────────
+# ── “DB” helpers ────────────────────────────────────────────────────────────
 DB_FILE = "db.json"
 
 def load_db():
@@ -58,52 +69,45 @@ def save_db(db: dict):
 def get_user(email: str):
     return next((u for u in load_db()["users"] if u["email"] == email), None)
 
-# ─── AUTH DEPENDENCY ────────────────────────────────────────────────────────────
+# ── Auth dependency ─────────────────────────────────────────────────────────
 async def get_current_user(request: Request):
     email = request.session.get("user")
     if not email:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Not logged in")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not logged in")
     user = get_user(email)
     if not user:
-        # in case they were deleted
         request.session.clear()
         raise HTTPException(status_code=401, detail="Invalid session")
     return user
 
-# ─── ENDPOINTS ─────────────────────────────────────────────────────────────────
-
+# ── Register / login / logout ───────────────────────────────────────────────
 @app.post("/api/register", status_code=201)
 def register(u: UserCreate):
     db = load_db()
     if get_user(u.email):
-        raise HTTPException(status_code=400, detail="Email already registered")
-    
-    pwd_hash = ph.hash(u.password)
-    
-    db["users"].append({"email": u.email, "password": pwd_hash})
+        raise HTTPException(400, "Email already registered")
+    db["users"].append(
+        {
+            "email": u.email,
+            "password": ph.hash(u.password),
+            **({"public_key": u.public_key} if u.public_key else {}),
+        }
+    )
     save_db(db)
-    return {"email": u.email}
+    return {"email": u.email, "public_key_saved": bool(u.public_key)}
 
 @app.post("/api/login")
 def login(u: UserCreate, request: Request):
     user = get_user(u.email)
     if not user:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+        raise HTTPException(401, "Invalid credentials")
     try:
         ph.verify(user["password"], u.password)
     except argon2_exceptions.VerifyMismatchError:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-     
+        raise HTTPException(401, "Invalid credentials")
     if ph.check_needs_rehash(user["password"]):
         user["password"] = ph.hash(u.password)
-        db = load_db()
-        for rec in db["users"]:
-            if rec["email"] == user["email"]:
-                rec["password"] = user["password"]
-                break
-        save_db(db)
-
+        save_db(load_db())
     request.session["user"] = user["email"]
     return {"message": "Login successful", "email": user["email"]}
 
@@ -113,63 +117,86 @@ def logout(request: Request):
     return {"message": "Logged out"}
 
 @app.get("/api/auth/me")
-def whoami(user = Depends(get_current_user)):
+def whoami(user=Depends(get_current_user)):
     return {"email": user["email"]}
 
-@app.get("/api/messages", response_model=List[Message])
+# ── Public‑key exchange ─────────────────────────────────────────────────────
+@app.post("/api/keys", status_code=201)
+def upload_key(pub: PublicKeyIn, user=Depends(get_current_user)):
+    db = load_db()
+    for u in db["users"]:
+        if u["email"] == user["email"]:
+            u["public_key"] = pub.key
+            break
+    save_db(db)
+    return {"stored": True}
+
+@app.get("/api/keys/{email}", response_model=PublicKeyOut)
+def download_key(email: str, _=Depends(get_current_user)):
+    user = get_user(email)
+    if not user or "public_key" not in user:
+        raise HTTPException(404, "Key not found")
+    return {"email": email, "key": user["public_key"]}
+
+# ── Messaging ───────────────────────────────────────────────────────────────
+@app.get("/api/messages", response_model=List[MessageEncrypted])
 def read_messages(user=Depends(get_current_user)):
     db = load_db()
-    # only show messages to/from this user
-    out = []
-    for m in db["messages"]:
-        if m["from_email"] == user["email"] or m["to_email"] == user["email"]:
-            out.append(Message(**m))
+    out = [
+        MessageEncrypted(
+            **{
+                **m,
+                "encrypted_key_self": m.get("encrypted_key_self", ""),
+            }
+        )
+        for m in db["messages"]
+        if m["from_email"] == user["email"] or m["to_email"] == user["email"]
+    ]
     return out
 
-@app.post("/api/messages", response_model=Message, status_code=201)
-def create_message(msg: MessageIn, user=Depends(get_current_user)):
+@app.post("/api/messages", response_model=MessageEncrypted, status_code=201)
+def create_message(msg: MessageEncryptedIn, user=Depends(get_current_user)):
+    if not get_user(msg.to_email):
+        raise HTTPException(404, "Recipient not found")
+    if "public_key" not in get_user(msg.to_email):
+        raise HTTPException(400, "Recipient has not uploaded a key yet")
+
     db = load_db()
     next_id = max((m["id"] for m in db["messages"]), default=0) + 1
     obj = {
         "id": next_id,
         "from_email": user["email"],
         "to_email": msg.to_email,
-        "content": msg.content,
+        "ciphertext": msg.ciphertext,
+        "encrypted_key": msg.encrypted_key,
+        "encrypted_key_self": msg.encrypted_key_self or "",
+        "iv": msg.iv,
+        "tag": msg.tag,
         "timestamp": time.time(),
     }
     db["messages"].append(obj)
     save_db(db)
-    return Message(**obj)
+    return MessageEncrypted(**obj)
 
-
+# ── Friend graph (unchanged) ────────────────────────────────────────────────
 @app.post("/api/add-friend")
 def add_friend(new_friend: FriendRequest, user=Depends(get_current_user)):
     if new_friend.username == user["email"]:
-        raise HTTPException(status_code=400, detail="Cannot add yourself")
-
-    # Target must exist
+        raise HTTPException(400, "Cannot add yourself")
     if not get_user(new_friend.username):
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(404, "User not found")
 
     db = load_db()
     graph: dict = db.setdefault("friend_list", {})
-
-    def add_edge(a: str, b: str):
-        friends = set(graph.get(a, []))
-        friends.add(b)
-        graph[a] = list(friends)
-
-    add_edge(user["email"], new_friend.username)
-    add_edge(new_friend.username, user["email"])
+    graph.setdefault(user["email"], [])
+    graph.setdefault(new_friend.username, [])
+    if new_friend.username not in graph[user["email"]]:
+        graph[user["email"]].append(new_friend.username)
+    if user["email"] not in graph[new_friend.username]:
+        graph[new_friend.username].append(user["email"])
     save_db(db)
+    return {"added": new_friend.username, "by": user["email"]}
 
-    return {
-        "added": new_friend.username,
-        "by": user["email"],
-    }
-    
 @app.get("/api/friends", response_model=List[str])
 def list_friends(user=Depends(get_current_user)):
-    db = load_db()
-    friends = db.get("friend_list", {}).get(user["email"], [])
-    return friends
+    return load_db().get("friend_list", {}).get(user["email"], [])

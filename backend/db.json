@@ -2,28 +2,119 @@
   "users": [
     {
       "email": "chris",
-      "password": "$argon2id$v=19$m=65536,t=3,p=4$h2RCTPo9JQ95j4UzsTCmVA$BiPUceGMm9NWQEcMQrId3KXNonIDDe+4XNlun6wjNu4"
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$UHCOqzAGVDemCl9waKc5Wg$AzGdNQbRRjdhhH6A5F9jJPJ1Q5faGqyIrolHYfinHsc",
+      "public_key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxzxoFtrbYLVnyxJZr24PWnYTNqamnqZzpgFjf7nuDsA/mhE2Fx+wZs+Km5e2UPAZ507DyNZTiiinoSnJB5xkcsGxLuuLMz/xD6aMHwujzeAHijbsm9Jt7f2AOlHE7nwFjAghl+aVvQ8FmdpkDLa4c3TCvWL1bsr/fBsaVshY6Z8EwvCZtOS5J+PFlODjqq0ZAeivF44/9wAG4mGqZrqU1h5IFVoO3NagulEwpq3p9oiCyU8wR6w0+yUVFsJYF4dc37vgkZmmpuZnIopP9ixjtsPoIIAgUJFDpdZR1/v5f6YtauLVTPp4tvhuN2Ny8ZbFt/VwmiPPFUwCOk4ZhaqgYQIDAQAB"
     },
     {
       "email": "sapphire",
-      "password": "$argon2id$v=19$m=65536,t=3,p=4$UEAZfo9e0+WuMoJmH0RjiA$KsJVNzARehA51NC2D1HJwDiyPcuSOIOAGLwSLPfFqlE"
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$dBkl9hCH3XkLJWRZmOrm9g$K5s0NA+OPfVciqdRVwl6l2DBdfHcRrP7nLK+HtgCqVs",
+      "public_key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxzxoFtrbYLVnyxJZr24PWnYTNqamnqZzpgFjf7nuDsA/mhE2Fx+wZs+Km5e2UPAZ507DyNZTiiinoSnJB5xkcsGxLuuLMz/xD6aMHwujzeAHijbsm9Jt7f2AOlHE7nwFjAghl+aVvQ8FmdpkDLa4c3TCvWL1bsr/fBsaVshY6Z8EwvCZtOS5J+PFlODjqq0ZAeivF44/9wAG4mGqZrqU1h5IFVoO3NagulEwpq3p9oiCyU8wR6w0+yUVFsJYF4dc37vgkZmmpuZnIopP9ixjtsPoIIAgUJFDpdZR1/v5f6YtauLVTPp4tvhuN2Ny8ZbFt/VwmiPPFUwCOk4ZhaqgYQIDAQAB"
     },
     {
       "email": "admin",
-      "password": "$argon2id$v=19$m=65536,t=3,p=4$c4oLh9KkSCyZJY4p1zpPQg$2hkGW2Uf45bKu4lvu/30++cskNB9hXi//mRYnt7YHBU"
-    },
-    {
-      "email": "samin",
-      "password": "$argon2id$v=19$m=65536,t=3,p=4$4aPwoOb88rPQMEIbeeCYHA$MULZr2/vZqid02LpYbULTwpNyR24qe9JK/8YtXD0T4k"
+      "password": "$argon2id$v=19$m=65536,t=3,p=4$HktclieCQV9m7JY43nMECQ$Cv+WpvMnbk69ho7Vjt71NbFxqTgT8qtNx4qx1suaSLw",
+      "public_key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxzxoFtrbYLVnyxJZr24PWnYTNqamnqZzpgFjf7nuDsA/mhE2Fx+wZs+Km5e2UPAZ507DyNZTiiinoSnJB5xkcsGxLuuLMz/xD6aMHwujzeAHijbsm9Jt7f2AOlHE7nwFjAghl+aVvQ8FmdpkDLa4c3TCvWL1bsr/fBsaVshY6Z8EwvCZtOS5J+PFlODjqq0ZAeivF44/9wAG4mGqZrqU1h5IFVoO3NagulEwpq3p9oiCyU8wR6w0+yUVFsJYF4dc37vgkZmmpuZnIopP9ixjtsPoIIAgUJFDpdZR1/v5f6YtauLVTPp4tvhuN2Ny8ZbFt/VwmiPPFUwCOk4ZhaqgYQIDAQAB"
     }
   ],
   "messages": [
     {
       "id": 1,
-      "from_email": "samin",
+      "from_email": "sapphire",
       "to_email": "chris",
-      "content": "hi",
-      "timestamp": 1753076759.876051
+      "ciphertext": "FKVdxVdG4Ejuiv5PzS9W",
+      "encrypted_key": "rabmK6arnL5XoVCZmIr7IDrfiXB5Du8uXKgCnHf66wsft4EC2w3uAZ5X8GATO0IJSpMaGcTvitu9YBpxYPUdFtye0nBBQ4auVfczEfamdneRyvDN1zfpxnQoMKmxoPds0vkQHKEANkewH5W0IAkSDb3hxXnBDXvXmYXNUp9klW7huM3BQu/uGQe7NeZe6TfGZEXl2oIBqdZScYdoaxpb5jgA94LPgsIy+4KEIvVFvzNKB2oaqt1PO5t17h5EiUXM/JTPTlHCYY6wyRBtTGDuZFZPuu0GNP75nDyVfnsan87Oyoh/grMvTL1+d+H1j80RAI8sfnb3gx3kYnPdImIKaA==",
+      "encrypted_key_self": "JlP2xTT0oKHE0+sX04XYEjrBm5awxM8G43cG9oraOKxFVEGsP4RSiSSSuWn7dLCVnEVlEU13u8Y1Oudt/nAsOiX88g7hA6a0z7908b3gjAQaWlb9S2kuJS1M26q1aXo6Kav5Jrq5qEmUS9dlyukcWA/TnAh4uBzLaBAwQ0wO8ShOoWCqgWstjDDhSdLsZJp3PQI4XVeeCRgLAYCYH/aFACJzKaijiyvM4B+vGK4P24MRStp1N8IUyUwVZmNeIVx5kJkJIUH7ssNXZ4B7D+XW35hCSChEPYDrgxps881nmabGvbrLQ2eHuiiZUGNq8CBZO22sNd5Q7/GBZimc1uvqDQ==",
+      "iv": "3vWE/Wsbc9h/oiUB",
+      "tag": "8M5vCCa31Eb0fdXP8k2KKA==",
+      "timestamp": 1753086759.027532
+    },
+    {
+      "id": 2,
+      "from_email": "sapphire",
+      "to_email": "chris",
+      "ciphertext": "ABNyKzUGe9Ojmt3aTShrRA==",
+      "encrypted_key": "BWMPyb07hBVcZ0+SzVgwH0gqQamrnGaC/Drz+LtLxQEULExDeftFaG4tsWiUi64qpqWd1LF+lIPuYvSrPVYMaXnhh8G8SFdP6Il6Ffml+omoI4/Yfy1vV4fPaNGCccnT1NhMaP86vcOaGsd4anoehqrN2rBGnLL3bIYbdKPlJbb7Cix0ycYxdp5qidMD3tObu/7XUVZjecnSN6fAAxJnP2QGa0gxhkzV7bi4wAIVzFEn/f2wVxlV3gVopo3S3WzgDFPuEk1e5x5r88TpiXbyjMuDKaawD5JwLf1cfqDWfncWM17BezEHS5kfpvL2fxA0vXu7Z6AojEPeWKd5/n7TbA==",
+      "encrypted_key_self": "M+3TMap0HfuPVKvztkzDMYbDl8XBQ7S/WGN7C9uP6kIJXUttxY2jr0uFYWRpBufT5rOO/FNKoAQDC+MZIMASX4n0WlyFRbZImtgSiFXqD90HLZapwVbNsNtw7pFVmIH4A2mbJB1NJ99sWPyOsS3OVb/0D0tj3u5Kfazfqy8vURe9OWiEh6vIXHNJmfEyyA/Ya+jU56qiVA2pVqL9BtZQo3A60E3UyE9uwr2TRHk9AKNBtC4vC01otHTRI+pHogiU+749xhlM1FCrGJyHqP+navihJwnXYGlOg+0wQFF1fuBLmmHHZg+dy9meDxK5kDwlafj84zcGtDz47lc+uMq3FA==",
+      "iv": "Fl6q3M9w1RhMnXij",
+      "tag": "FozI87d+/dC2UKkS9GcQHw==",
+      "timestamp": 1753086765.079657
+    },
+    {
+      "id": 3,
+      "from_email": "chris",
+      "to_email": "sapphire",
+      "ciphertext": "ZNngOHNlPio1vj9dJtJt",
+      "encrypted_key": "KqNQ0GDiSDB3k06L8cDY3vCEnq7sf4fZ5mTclgGtKDDRmnHd2P6LhpoLtnXNW0Ly3iAULAX9BR3rMt2i6+E84Sm5TTzUKAb1bHj8FucqR9qj1dnO86kMCXgsIIMrr8IPdxzbdhqqD6l0rtaSyfq3dbKxppi6+SNd79P+4vM0ohQZDVmD17X1qzZzltw73yd1z96OtZPs9+nf8ATPXpFoiTJiYrINNBzn/WXQjjqlqC22MDwc3E2O7fNzRSxeDwgBGSHbeYLiUUwPA1zH4Vb94owoHRJkp99FTdpyPI/82MQaDu/bJNqsZHYvItiUduy1svtdcU02EOMuutTf2PFC6A==",
+      "encrypted_key_self": "rRhHsJd0nsGy4LpJxYnjYQ1ZFPtYiKbJDvIP+oHyna23imx6CDyIY8oj54zkvO79cwasCsQyAMFTc9wssGevPzRS+2D/EZbAH1G3heGsOg1HDIDgBcTnty+jyFfbCyThJVb3yS4g/U1cLu6WlTcmka5tXhYzn/eo+H51N6hzwwpL0ODWN5M4AhS3SfTBjIj9NnehDjer6PSJdmyjoibNPz2J+vIK1y4OgT2xd4c6fEgVam1YU+XMoD+/tjJap707TX/XT6NobeRgRvyn5tOIwy0PkTYvTTM73zUUxu15akaxzmDW49pwBJjYoFDLbBZke2Xeqenf9RiOUMgKE5w8/Q==",
+      "iv": "jqg9KQLao1/iIZvD",
+      "tag": "7KmFMueH33NekzPQ9D7RoA==",
+      "timestamp": 1753086786.708488
+    },
+    {
+      "id": 4,
+      "from_email": "chris",
+      "to_email": "sapphire",
+      "ciphertext": "nMPCHNhWwQrSjN5shM7lBw==",
+      "encrypted_key": "KZgiM9qAqQF8HLYrw0eJMFSY3uifyAhVd8XSegdoiQ0BvG5eVY1XTviF783OSv1U4GKucsUIW0pQXniS0P2wwB8JPXcxk/omgG8QOdreVzoAlE2EZ46fTPoSyujCxU+Af8qkDfoMOITQId43On6MhCwrq+5Lkwq0maGBK2KOelzIaMEOxJ0qXWxPwu7hcHUJtadveHavzAOUBvM9hcdrcvYsfZKN72rPGS0UnnwgA+7RePJP2/WBRoiuXTOhRn2fyZAKAPitRJUAtWEbT4U5M+3ycWqOcg/q6GUhNrFjcwmeHyNiFxBjZcdwHpRltJdmTcFNr6v9/rY5CpRD8oRMlg==",
+      "encrypted_key_self": "d4zxn9F0m+dxTAHRlGSx2YD5SAbcm81mFQBEhlRP59v4lvuxM8w8IygfHLjW1gXkSpycDg+UQXsdp9p33/Tl/YsKg9k6BF+CZS8lzJCnFN6KUgF2/RjeaMTI/RE8amN9GQQ1gO53DklZVgd1narKlSlmkvvt61Hi5ju3fDXSNDwWqfAg9ZQnqiCvsx6FuHKwED4W4htkZcM9sn4dQQH3llX7nyvACLnYADuzaKcLiObjYA5E7H6kSWpl+JhElFN2Z0Bkl5pFQ2iPg1wUP+bzF8KfnFFH3LdK9/e50d95H0c0anwPIeM+eqOfOIw9mu9awWoNuORRrXJBJWeg5Q1iGg==",
+      "iv": "NYZElcLsqPPUWl+i",
+      "tag": "blbLCB5e5bV1WLM1f2zHZQ==",
+      "timestamp": 1753086793.3790941
+    },
+    {
+      "id": 5,
+      "from_email": "admin",
+      "to_email": "chris",
+      "ciphertext": "j67z7v0IYMpZpH9x",
+      "encrypted_key": "Scy5fTgYUfKIKimQs+/9XADe8b4CmHhx3+lHB89N3hWdLMRc+O9xp5mY7lZGk98kJkYqURBbCda1ZvZedmhYezGQWfhz6GwEXKic+1MexHVhEKEx/eL1fgDjOWCk+buMLrkepFfeH+xTqaBOva/8QUpWnddFEK1pc38HogOM3JN4VRCZXbc5w7Y8CarJYFZygc8ilg/lBpLygAOMUwe7f1tfpKJGCnCsqF5EdGJ9/O57rGasL+jkTG9qfuDalNrKhSVx+7aNXc3xKgXdrILA5nZgqWPqz9d+qSOnX9EF/89GELOzkoqrpHKTleMJNyGJ07m3l6NJuzcghVIufQnvTw==",
+      "encrypted_key_self": "KPevhDi1Rj5CtchYc71zc5SbFor8FOH3DsxU5kQYUwL4YtLWSEJjzoN95jzK11zH19PKBQYsnqBs9hxISEoxC/dOafJyxI5AXAErwthhokAacnhQFv7oCtdFZRbdFjy+PWJ0BvjBnK3V9mQiyj14dJxIekokSafcnRcX33XUhz6hDrSvyaWrRSplmY9jIfC/LA/+XcD8sFDBSm62AMZphhg9Nh0/vIeC1fefUR6L2epiVYXnxbbw3Titcsnme+LrY/j6PYiYcG6emzACBe1ovzZwJLGR7Hi9hs5wkn8X9RnB2+PO6owQlfqi5IHUHHwKwCtfJFML3HUr4/RJzYg47g==",
+      "iv": "AY5th39KYddX0fX1",
+      "tag": "NyXtROJdykdwRmijz9HOCQ==",
+      "timestamp": 1753086841.9030342
+    },
+    {
+      "id": 6,
+      "from_email": "admin",
+      "to_email": "chris",
+      "ciphertext": "kdDkasoWmKhNNHa6ww==",
+      "encrypted_key": "tTPM5ZOL/G/3J2NnFA20KmmXfmF+PRTvFrdlPv4jW3Ri0yhFKTZokhFu+PaTIivrZcRCRPlO7K71SoTOQK57evx6/rbZHC0Bzqc2GxT+4Wo/sdf9epdKLvJda3h74KNYG58jjKIdQAYuKFewurcyA0asSGjls7mVOgLhsuIYHD6mKEs+sxD03JqoBVmcHMk94oyIAaa6CZ2GvR1BVxxD0+DOaCP3AGZBY97WUOff9FtaZ6o4/46nyeQd+mfb1eyWTb0RD6gSHziYl7v8Z0BaKv+ATm1Q6zaN4fmSLvxkcGwTvw6zno6uyqY5rOZM9s0Vu3Jo5xJUYNPReMBZc3xFGQ==",
+      "encrypted_key_self": "V6KFHTO0BpykxHO5iwyUxYfwZOo8jT97jt8wG0bGwIoNCcX5ZOI4c81q4Gzg0IlobJKu51RK8YB329pkeogh4Og/8et2lwrpa2EWefCyOlNc7FJXSwAEuh1UhHrraW/ey6DxAugKX6dZDdyCQF89qi97VuyKMoYYih7kp8An3xY2BucIS+UGHGJyuRKYhaSnVfk+h/lQHQYlnXmg/E0P25GVRIqiAnt3WJQCLqIO569yecXdiseXV3oTePFFIGzXUujenqIPtOR5YiwArh9Q16hV8asd6QyZBkguJr8CooTYcXH6vTNttWPBXQru7IiCzXi+AGOjhrih6f/M9e9f5g==",
+      "iv": "uVwhXQmvfdNFvToH",
+      "tag": "udjE0ZxQpy6JoDPLKRlL7g==",
+      "timestamp": 1753086850.260211
+    },
+    {
+      "id": 7,
+      "from_email": "admin",
+      "to_email": "sapphire",
+      "ciphertext": "IbJcsjkkCfMiSznxAauU",
+      "encrypted_key": "DGP0rHcRGDTPk42WLQ6/wMwGhC0vXUnG4ZKoRlfUP5OTfXCvjLd2ar80NE9KgMkGrdmy3QoEgrR0tbIHTu+mKjGHRQhOzlWlI7YzVfCTHrocUkRr3M5TV+2DigbZ60HzF7UrFATcsRtNnbYVLfSeN8fEW6T127apBy7lhQgxVhjvxQqiK35+0nOYEjtd6LkZ/DIJ1K1HJp85S6Kv9J9j5hANa9jJRMwqchw8yGA4apGTFTTGBJ4DipFsVXcVz5nyU1ZFHb0FmrzFWNdfEzuIN5N4e8o+0r9V1KqMO1g5I2yTakcY9JYmhERIYWmgKR2mg591NA49v9U5pCrFXY5ULg==",
+      "encrypted_key_self": "THnS0HrRRn/O3nlyZHX/1VpZ4AGF4usaDXl4yKljcRoUwAYdcup9J9Q3j2VDZ78ksoLs6+q9p7COKwDQMPPs/qmWXTi4ufxfyyyygTiqHGLXm+Qrq6WN+9ucFHtc2U1VHqLM8ENQZkLREi+z7H6wSN+mXCMb8ObRd/nZQcSwxYC7vxZxT5wqm2IS4zyISZXgbn3z7LsTpCXpnjfjy8IyTGvG34uM1Wphgfrv4u2HTyp4YX3nipv3RQsLFH5Iq0hEXQHuhvfSQguovVYLidX8ZEPUNU4iWC3y7IYe5rKNCEdCWb54e6ycOifs7L/xDqCc33XTbUz2Vhgtyu3O4x3MxQ==",
+      "iv": "SorX4OkQcCy8bKmi",
+      "tag": "hIYqCPZCBwe8WEif65F5Tw==",
+      "timestamp": 1753086856.8747468
+    },
+    {
+      "id": 8,
+      "from_email": "admin",
+      "to_email": "sapphire",
+      "ciphertext": "xdQUp48+l1GTSuA0w+sc1w==",
+      "encrypted_key": "fkxf1Jt5J7FeZ8IyTZR4ah7gG8GdGRII2vNNobrdfKDdpALUiK2VbZfTVN2zuIWPA0MokogfW/NC9dpK/6Zktni3Z+zhp4FxXV/fqpn3VdI0nsTYWI8+arSFo9dAi6NTpS7NuBPd9Sdh1szfOTIUgV7pFRX7Y7GbIoHRFD09uPKkFkm3q4VnL8iLX3Nj4cMDrAr0m7xZ99Mj3XnkOtKFZTLF+VwFAyCwfuOh1tJLfnpz99J24pScqBTEtR6QdutpkDTgNbwGI/6VLh3IV2UqGQIezFZTFm/wq9Ht00NJXaedonTw7vSsq76VU38Te1dLPgUoWWt7eG7FK/QQGSAneQ==",
+      "encrypted_key_self": "W0AabjmOrUg31Rr6Y75P2aU4NBdd78ZLK6rBkDnbDsBQTTpZ4GMxBemOVpCYSFThUy5gX7j6u+saT0nb6ZX7cSQyeAa/TWMtluCge6ruGqaeHix9P/kRmF/U8jYvrIEYMXeVDBouyV4cT81pgzFsOy/YzGBZU0+oHeKZdsr7voyLcjsUrwjic1oQ6Xnl/BKUOAfLeVOHOLtiuw3YnVWHQabE9/h22XpWQ/P25ofeT/7QiQnyQMmgDjKVLYz/ClhRZgbt7VQDq4M7woqwjASihjqgFvJXLDz4Zb2AkayghMh2eo8eBYXTObDx3tUGcx4QY/UV6JwoS9ZJC3+sEVQ+hQ==",
+      "iv": "XAopxvf9Js3aulK5",
+      "tag": "nGrfGbfEU3YhXvB0te7HfQ==",
+      "timestamp": 1753086860.2285728
+    },
+    {
+      "id": 9,
+      "from_email": "chris",
+      "to_email": "sapphire",
+      "ciphertext": "hZb+",
+      "encrypted_key": "mqnFgD3A0w6gtDVbXFdaJ0s8ahO+oKeeCzZUXv8VfRzBHWNyWlTsR0xzgPX9BNqyQlFFkTKYum8PWE0n3I1t2IT7+53Ehs3kyxl6CcapfdRHxp54Iz3Hpa9v9PE8t7pPv+ZM00yoXbANFbDMHHo51U3xTUwitLaLWGHATRTd+s+0vVfxHRtaXKcYtvZxEdR5BRjQ+1Zc0c7XQCX7IrqHRmKH7KDVHWJJloh6t1RbM7f2/x0fxDMYhmxfy5364nDdnt7+bKBLCyiSDTft/BJQXNIxJ4vYfE9UYrIN2yxJQtxKOiuJh4n99hkzSo5pDJDZrcCpTNYQ+uPPI/csed3DLQ==",
+      "encrypted_key_self": "fPj2aH6Mc6cCdneamPSkJc9g/uX5oK2AELJAKN/pWcgbpzqRIXamMR7DZ+n3eMEjTl3DxP9SKD2AJGkLP7MnA57P1H9Wy3N+WUik5o9lSAceGf9TEFRrdrtL5Q+lMxfxkidP2V6yXS4AfIJw5fCKvIR2/9p13ieL5ZerhcuJAbni5INro52xY79WrRv7l27QKfBXQziKIqoTwhpyr4xW90yRcnc6sEDnICc5NO8tp5Y+ShNYKP8cH8pBNesMs+qMklyUM+7bJlKBrT7EbE60a+W036xZHqEHQ3NOiQFW7pFcSiGv04HD9DSgMTkz0N/4mqppGosJNbWRjHqP95ltqw==",
+      "iv": "/LuIbAY6qtXbwQgv",
+      "tag": "wDJ+4OEpywXJ3z3Qa+76vw==",
+      "timestamp": 1753181117.0617359
     }
   ],
   "friend_list": {
@@ -32,16 +123,12 @@
       "admin"
     ],
     "chris": [
-      "samin",
       "sapphire",
       "admin"
     ],
     "admin": [
       "chris",
       "sapphire"
-    ],
-    "samin": [
-      "chris"
     ]
   }
 }
